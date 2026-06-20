@@ -1,8 +1,10 @@
-FROM ubuntu:latest
+FROM ubuntu:24.04
 
-RUN apt update && \
-    apt install -y openssh-server curl nano
+RUN apt-get update && \
+    apt-get install -y openssh-server curl nano
 
-RUN mkdir -p /var/run/sshd
+RUN mkdir -p /run/sshd
 
-CMD ["/usr/sbin/sshd", "-D"]
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D", "-e"]
