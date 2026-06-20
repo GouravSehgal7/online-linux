@@ -1,10 +1,13 @@
-FROM ubuntu:24.04
+FROM ubuntu:latest
 
-RUN apt-get update && \
-    apt-get install -y openssh-server curl nano
+RUN apt update && apt install -y curl
 
-RUN mkdir -p /run/sshd
+RUN curl -L \
+https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.x86_64 \
+-o /usr/local/bin/ttyd
 
-EXPOSE 22
+RUN chmod +x /usr/local/bin/ttyd
 
-CMD ["/usr/sbin/sshd", "-D", "-e"]
+EXPOSE 7681
+
+CMD ["ttyd","-W","bash"]
